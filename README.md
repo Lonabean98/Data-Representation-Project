@@ -1,4 +1,4 @@
-Welcome to the Data Representation Project 2021 repository!
+Welcome to the Data Representation Project 2022 repository!
 
 This repository contains the code and data for a web application built with Flask and RESTful APIs that connects to a database table and allows for CRUD (create, read, update, delete) operations through a web page. The application is a guitar shop inventory system for a fictional store called String Theory. It allows users to view the list and details of the current stock, create new stock with the option to select guitar model and colour, update existing stock, and delete stock. All of these actions are interfaced with a stock table in a MySQL database.
 
