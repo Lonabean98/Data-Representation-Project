@@ -1,0 +1,420 @@
+<!-- html program for the Guitar Shop-->
+<html>
+    <head>
+
+        <body style="background-image: url('https://cdn.mos.cms.futurecdn.net/ecc20a86edb29d5d7d811ff16c4015f5-1200-80.jpg.webp'); background-repeat: no-repeat; background-position: center; background-size: cover;">
+            
+        </body>
+
+        <!-- CSS style section for buttons, page headings, tables etc. -->
+        <style>
+            
+
+        
+            .button {
+                display: inline-block;
+                padding: 10px 20px;
+                font-size: 16px;
+                font-weight: bold;
+                text-transform: uppercase;
+                color: #fff;
+                background-color: #1e90ff;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+
+            button:hover {
+              background-color: #55b5ff;
+            }
+
+            button:active {
+              transform: scale(0.95);
+            }
+            
+            button:focus {
+              outline: none;
+            }
+
+            .create-button {background-color:rgb(8, 207, 8)}
+            .update-button {background-color:rgb(8, 207, 8)}
+            .delete-button {background-color:crimson}
+            .cancel-button {background-color:rgb(245, 117, 12)}
+            .displayUpdate {background-color:rgb(245, 117, 12)}
+            .updateStock {background-color:crimson}
+            
+            
+            #banner {
+              background-color: #333;
+              color: white;
+              text-align: center;
+              padding: 20px 0;
+            }
+            #banner h1 {
+              font-size: 32px;
+              margin: 0;
+            }
+            #banner h2 {
+              font-size: 24px;
+              margin: 0;
+            }
+
+            table {
+              border-collapse: collapse;
+              width: 100%;
+              margin-left: auto;
+              margin-right: auto;
+            }
+
+            table:hover {
+              box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            }
+            
+            th, td {
+              text-align: left;
+              padding: 8px;
+            }
+            
+            tr:nth-child(even) {
+              background-color: #f2f2f2;
+            }
+
+            tr:nth-child(odd) {
+              background-color: #e4e3e3;
+            }
+            
+            th {
+              background-color: #1e90ff;
+              color: white;
+            }
+
+            .center {
+              margin-left: auto;
+              margin-right: auto;
+            }
+                 
+
+       
+
+        </style>
+    <style>
+       
+    </style>
+    
+    
+    <div id="banner">
+      <h1>String Theory</h1>
+      <h2>Your One-Stop Electrical Guitar Shop</h2>
+    </div>
+
+
+        <body>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        
+        <!-- Setting up the table for creating and updating stocks -->
+        <div id="create-update" style="display: none">
+            <h2 style="color:white">Create New Stock Entry</h2>
+            <table id="createStockForm" class= "center">
+                <tr>
+                   <td><inPut type = "hidden" name="id" id ="idInput"></td>
+                </tr>
+
+                <tr>
+                    <td>Guitar Model</td>
+                    <td><select style="width:fit-content" name="guitarmodel" id="guitarmodel">         
+                        <option value="Select Model">---Select Model---</option>        
+                        <option value="Fender Stratocaster">Fender Stratocaster</option>
+                        <option value="Gibson Les Paul">Gibson Les Paul</option>
+                        <option value="Fender Telecaster">Fender Telecaster</option>
+                        <option value="Fender Jazzmaster">Fender Jazzmaster</option>
+                        <option value="Gibson Flying V">Gibson Flying V</option>
+                    </select>
+                    </td>
+                </tr>
+
+                <tr>
+                   <td>Price </td>
+                   <td><inPut type = "number" step="0.01" name="price">$</td>
+                </tr>
+                <tr>
+                   <td>Quantity</td>
+                   <td><inPut type = "number" name="quantity"></td>
+                </tr>
+
+               
+                
+
+                 
+                <tr>
+                    <td>Date Received </td>
+                    <td><inPut type = "date" name="datereceived"></td>
+                 </tr>
+                 <tr>
+                    <td>Colour</td>
+                    <td><select id = "colour">
+                        <option value="colour">---Select Colour---</option>
+                        <option value="3-tone sunburst">3-tone sunburst</option>
+                        <option value="Charcoal grey">Charcoal grey</option>
+                        <option value="Tangerine flake baby">Tangerine flake baby</option>
+                        <option value="Purple Haze">Purple Haze</option>
+                    </select>
+                </td>
+                 </tr>
+               
+                <tr>
+                   <td><button id ="create-button" onclick="doCreate()" class="button create-button">Create Entry</button></td>
+                   <td><button id ="update-button" onclick="doUpdate()" class="button update-button">Update Entry</button></td>
+                   <td><button id ="cancel-button" onclick="Cancel()" class="button cancel-button">Cancel</button></td>
+                </tr>
+            </table>  
+        </div> 
+
+        
+        
+
+        <!-- Main page table setup with list of stock.  -->
+         <div id="display">
+          
+             <button onclick="displayCreate()" class=button>Create new stock</button>
+             <p></p>
+             <table id = "stockTable" style="width:80%" class = "table">
+                <tr>
+                    <th>id</th><th>Guitar Type</th><th>Price ($)</th><th>Quantity</th><th>Date Received</th><th>Colour</th><th>Update Stock</th><th>Delete Stock</th>
+                </tr>
+                
+            </table>
+         </div> 
+
+         <!-- Script functions are contained here --> 
+         <script>
+            
+
+
+           
+    
+            //This function reads the details of a stock entry for use in the update or delete functions
+             function readstockFromRow(rowElement){
+                stock={}
+                stock.id = rowElement.getAttribute("id");
+                stock.guitarmodel = rowElement.cells[1].firstChild.textContent
+                stock.price = rowElement.cells[2].firstChild.textContent
+                stock.quantity = rowElement.cells[3].firstChild.textContent
+                stock.datereceived = rowElement.cells[4].firstChild.textContent
+                stock.colour = rowElement.cells[5].firstChild.textContent
+                
+                return stock
+             }
+
+             function displayCreate(){
+                document.getElementById('create-button').style.display = "block"
+                document.getElementById('display').style.display = "none"
+                document.getElementById('create-update').style.display = "block"
+                document.getElementById('update-button').style.display = "none"
+                
+                
+             }
+
+            // This function gets the stock details and updates the server
+            function doUpdate(){
+                stock = getstockFromForm()
+                updateServer(stock)              
+            }
+
+           
+
+            function displayUpdate(thisElem){
+                var rowElement = thisElem.parentNode.parentNode;
+                stock = readstockFromRow(rowElement)
+                populateForm(stock)
+                document.getElementById('display').style.display = "none"
+                document.getElementById('update-button').style.display = "block"
+                document.getElementById('create-button').style.display = "none"
+                document.getElementById('create-update').style.display = "block"
+             }
+
+            // Add new stock to the server and call th table function to show updates info 
+            function updateServer(stock){
+                $.ajax({
+                    url:'http://127.0.0.1:5000/guitars/'+stock.id,
+                    data:JSON.stringify(stock),
+                    method:'PUT',
+                    dataType:'JSON',
+                    contentType:"application/json; charset=utf-8",
+                    success:function(results){
+                        console.log("update", results)
+                        updateTableRow(stock)
+                        Display()
+                        clearForm()
+                        
+                    },
+                    error:function(xhr, status, error){
+                            console.log("error"+error)
+                    }
+                }
+                )       
+            }
+
+             //Function to get the data input on the create/update form and return it as a stock from the calling functions.
+             function getstockFromForm(){
+                var form = document.getElementById('createStockForm')
+                stock={}
+                stock.id = form.querySelector('input[name="id"]').value
+                form.querySelector('input[name="id"]').disabled = true
+                stock.guitarmodel = document.getElementById("guitarmodel").value
+                stock.price = form.querySelector('input[name="price"]').value
+                stock.quantity = form.querySelector('input[name="quantity"]').value
+                stock.datereceived = form.querySelector('input[name="datereceived"]').value
+                stock.colour = document.getElementById("colour").value
+                
+                return stock
+            }
+
+             // Function is called if the user presses the cancel button
+             function Cancel(){
+                    Display()
+                    clearForm()     
+            }
+
+            
+
+            // Adds the stock info to the crate/update form. Stock id cannot be changed
+             function populateForm(stock){
+                var form = document.getElementById('createStockForm')
+                form.querySelector('input[name="id"]').value = stock.id
+                form.querySelector('input[name="id"]').disabled = true
+                document.getElementById("guitarmodel").value = stock.guitarmodel
+                form.querySelector('input[name="price"]').value = stock.price
+                form.querySelector('input[name="quantity"]').value = stock.quantity
+                form.querySelector('input[name="datereceived"]').value = stock.datereceived
+                document.getElementById("colour").value = stock.colour
+                
+             }
+
+             
+
+            // This function adds the new stock to the server
+             function doCreate(){
+                stock = getstockFromForm()
+                $.ajax({
+                    url:'http://127.0.0.1:5000/guitars',
+                    data:JSON.stringify(stock),
+                    method:'POST',
+                    dataType:'JSON',
+                    contentType:"application/json; charset=utf-8",
+                    success:function(results){
+                        addstockToTable(stock)
+                        Display()
+                        clearForm()
+                        location.reload()
+                        
+                    },
+                    error:function(xhr, ststus, error){
+                            console.log("error"+error)
+                    }
+                }
+                )
+                Display()
+             }
+
+
+             // This function clears the create/update stock form. It is called after creation or update of stock to ensure for is clear for next update. 
+             //It is also called from the cancel function if create or update not proceeding. 
+             function clearForm(){
+                var form = document.getElementById('createStockForm')
+                form.querySelector('input[name="id"]').value = ''
+                form.querySelector('input[name="id"]').disabled = false
+                document.getElementById("guitarmodel").value = 'Guitar Model'
+                form.querySelector('input[name="price"]').value = ''
+                form.querySelector('input[name="quantity"]').value = ""
+                form.querySelector('input[name="datereceived"]').value = ''
+                document.getElementById("colour").value = 'colour'  
+             }
+
+            // This function posts a deletion request to the database server, on completion the stock is deleted and the stocks table is updated. 
+            function updateStock(thisElem){
+                var tableElement = document.getElementById('stockTable');
+                var rowElement = thisElem.parentNode.parentNode;
+                var index = rowElement.rowIndex;
+                id = rowElement.getAttribute("id");
+                $.ajax({
+                    url:"http://127.0.0.1:5000/guitars/"+id,
+                    method : "DELETE",
+                    dataType:"JSON",
+                    success:function(results){
+                        tableElement.deleteRow(index)
+                    },
+                    error:function(xhr, status, error){
+                        console.log(error)
+                    }
+                }
+                ) 
+             }
+
+
+            
+
+            // Function to GET the stock information from the server and call the function to populate the stock table. 
+            function fillTable(){
+                $.ajax({
+                    url:'http://127.0.0.1:5000/guitars',
+                    method:'GET',
+                    dataType:'JSON',
+                    success:function(results){
+                        for (stock of results){
+                            addstockToTable(stock)
+
+                        }
+                    }
+                })                 
+            }
+
+
+
+            // This function populates the stock table on the main page. 
+            function updateTableRow(stock){
+                rowElement = document.getElementById(stock.id)
+                rowElement.cells[1].firstChild.textContent = stock.guitarmodel
+                rowElement.cells[2].firstChild.textContent = stock.price
+                rowElement.cells[3].firstChild.textContent = stock.quantity
+                rowElement.cells[4].firstChild.textContent = stock.datereceived
+                rowElement.cells[5].firstChild.textContent = stock.colour
+                
+            }
+    
+            function Display(){
+                document.getElementById('display').style.display = "block"
+                document.getElementById('create-update').style.display = "none"
+             }
+           
+
+            // Function to add the stock data to the table on the main page. 
+            function addstockToTable(stock){
+                tableElem = document.getElementById("stockTable")
+                rowElem = tableElem.insertRow(-1)
+                rowElem.setAttribute("id",stock.id)
+                cell1 = rowElem.insertCell(0)
+                cell1.innerHTML = stock.id
+                cell2 = rowElem.insertCell(1)
+                cell2.innerHTML = stock.guitarmodel
+                cell3 = rowElem.insertCell(2)
+                cell3.innerHTML = stock.price
+                cell4 = rowElem.insertCell(3)
+                cell4.innerHTML = stock.quantity
+                cell4 = rowElem.insertCell(4)
+                cell4.innerHTML = stock.datereceived
+                cell4 = rowElem.insertCell(5)
+                cell4.innerHTML = stock.colour
+                cell5 = rowElem.insertCell(6)
+                cell5.innerHTML = '<button onclick="displayUpdate(this)" class="button displayUpdate">Update Stock</button>'
+                cell6 = rowElem.insertCell(7)
+                cell6.innerHTML = '<button onclick="updateStock(this)" class="button updateStock">Delete stock</button>'
+            }
+
+            fillTable()   
+         </script>  
+        </body>
+    </head>
+</html>
