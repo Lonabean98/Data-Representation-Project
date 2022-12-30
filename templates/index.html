@@ -374,43 +374,40 @@
 
 
             // This function populates the stock table on the main page. 
-            function updateTableRow(stock){
-                rowElement = document.getElementById(stock.id)
-                rowElement.cells[1].firstChild.textContent = stock.guitarmodel
-                rowElement.cells[2].firstChild.textContent = stock.price
-                rowElement.cells[3].firstChild.textContent = stock.quantity
-                rowElement.cells[4].firstChild.textContent = stock.datereceived
-                rowElement.cells[5].firstChild.textContent = stock.colour
-                
+            function updateTableRow(stock) {
+                rowElement = document.getElementById(stock.id);
+            
+                const cellData = [    stock.guitarmodel,   
+                 stock.price,    stock.quantity,    
+                 stock.datereceived,    stock.colour,  ];
+            
+                for (let i = 0; i < cellData.length; i++) {
+                  rowElement.cells[i + 1].firstChild.textContent = cellData[i];
+                }
             }
-    
+                
             function Display(){
                 document.getElementById('display').style.display = "block"
                 document.getElementById('create-update').style.display = "none"
              }
            
-
             // Function to add the stock data to the table on the main page. 
-            function addstockToTable(stock){
-                tableElem = document.getElementById("stockTable")
-                rowElem = tableElem.insertRow(-1)
-                rowElem.setAttribute("id",stock.id)
-                cell1 = rowElem.insertCell(0)
-                cell1.innerHTML = stock.id
-                cell2 = rowElem.insertCell(1)
-                cell2.innerHTML = stock.guitarmodel
-                cell3 = rowElem.insertCell(2)
-                cell3.innerHTML = stock.price
-                cell4 = rowElem.insertCell(3)
-                cell4.innerHTML = stock.quantity
-                cell4 = rowElem.insertCell(4)
-                cell4.innerHTML = stock.datereceived
-                cell4 = rowElem.insertCell(5)
-                cell4.innerHTML = stock.colour
-                cell5 = rowElem.insertCell(6)
-                cell5.innerHTML = '<button onclick="displayUpdate(this)" class="button displayUpdate">Update Stock</button>'
-                cell6 = rowElem.insertCell(7)
-                cell6.innerHTML = '<button onclick="updateStock(this)" class="button updateStock">Delete stock</button>'
+             function addstockToTable(stock) {
+                tableElem = document.getElementById("stockTable");
+                rowElem = tableElem.insertRow(-1);
+                rowElem.setAttribute("id", stock.id);
+              
+                const cellData = [    stock.id,    
+                stock.guitarmodel,    
+                stock.price,    stock.quantity,    
+                stock.datereceived,    
+                stock.colour,    '<button onclick="displayUpdate(this)" class="button displayUpdate">Update Stock</button>',    
+                '<button onclick="updateStock(this)" class="button updateStock">Delete stock</button>',  ];
+              
+                for (let i = 0; i < cellData.length; i++) {
+                  const cell = rowElem.insertCell(i);
+                  cell.innerHTML = cellData[i];
+                }
             }
 
             fillTable()   

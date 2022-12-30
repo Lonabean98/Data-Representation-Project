@@ -15,21 +15,7 @@ class GuitarDAO:
         database = 'datarep'
         )
 
-# Function to create a new stock into the database called from the flask server. 
-# Data is entered on the web page and  and written to the database. 
-    def create(self,stock):
-        cursor = self.db.cursor()
-        sql = "insert into guitars (guitarmodel, price, quantity, datereceived, colour) values (%s,%s,%s,%s,%s)"
-        attributes = [
-            stock['guitarmodel'],
-            stock['price'],
-            stock['quantity'],
-            stock['datereceived'],
-            stock['colour'] 
-        ]
-        cursor.execute(sql, attributes)
-        self.db.commit()
-        return cursor.lastrowid
+
 
 # Function to return all of the records from the database 
     def fetchAll(self):
@@ -68,15 +54,6 @@ class GuitarDAO:
         self.db.commit()
         return stock
 
-# Function to delete a specific record from the database.
-    def delete(self, id):
-        cursor = self.db.cursor()
-        sql = 'delete from guitars where id = %s'
-        attributes=[id]
-        cursor.execute(sql, attributes)
-        self.db.commit()
-        print('delete complete')
-        return {}
 
 # converts the records from the database to a dict type that can be written to the web page. 
     def ToDict(self, result):
@@ -87,5 +64,33 @@ class GuitarDAO:
                 value = result[i]
                 stock[colName] = value
             return stock
+
+# Function to create a new stock into the database called from the flask server. 
+# Data is entered on the web page and  and written to the database. 
+    def create(self,stock):
+        cursor = self.db.cursor()
+        sql = "insert into guitars (guitarmodel, price, quantity, datereceived, colour) values (%s,%s,%s,%s,%s)"
+        attributes = [
+            stock['guitarmodel'],
+            stock['price'],
+            stock['quantity'],
+            stock['datereceived'],
+            stock['colour'] 
+        ]
+        cursor.execute(sql, attributes)
+        self.db.commit()
+        return cursor.lastrowid
+
+
+# Function to delete a specific record from the database.
+    def delete(self, id):
+        cursor = self.db.cursor()
+        sql = 'delete from guitars where id = %s'
+        attributes=[id]
+        cursor.execute(sql, attributes)
+        self.db.commit()
+        print('delete complete')
+        return {}
+
 
 guitarDao = GuitarDAO()
